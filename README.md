@@ -2,7 +2,7 @@
 
 Control your computer's CLI from a browser on any device within your network (desktop, mobile).
 
-![](preview.png)
+![](preview/preview1.png)
 
 ## Installation
 
@@ -39,7 +39,7 @@ Control your computer's CLI from a browser on any device within your network (de
 
 Now, you can enter using the links.
 
-![](preview2.png)
+![](preview/preview2.png)
 
 ## Getting Help
 
