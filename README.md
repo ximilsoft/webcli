@@ -1,4 +1,4 @@
-# Webcli
+# WebCLI
 
 Control your computer's CLI from a browser on any device within your network (desktop, mobile).
 
