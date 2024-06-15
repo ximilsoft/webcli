@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Web CLI</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <style>
+      * {
+        font-family: Ubuntu, sans-serif;
+      }
+      body {
+      margin: 0;
+      padding: 0;
+      font-family: monospace;
+      background-color: #f8f9fa;
+      }
+      #terminal {
+      height: 80vh;
+      overflow-y: scroll;
+      background: black;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      position: relative;
+      }
+      #input {
+      width: 100%;
+      background: #343a40;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 0;
+      }
+      #welcome-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      }
+      /* Adjust position for smaller screens */
+      @media (max-width: 768px) {
+      #welcome-text {
+      white-space: nowrap; /* Prevent text from wrapping */
+      }
+      }
+      #input:focus {
+      outline: none;
+      box-shadow: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-4 mx-auto">
+      <div class="row justify-content-center">
+        <div class="col-md-12">
+          <div id="terminal" class="mb-3 text-white bg-dark text-light">
+            <div id="welcome-text" class="text-white font-weight-bold">Welcome to Web CLI!</div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <input type="text" id="input" class="form-control text-dark bg-white border border-dark" autofocus>
+        </div>
+      </div>
+    </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const terminal = document.getElementById('terminal');
+        const input = document.getElementById('input');
+      
+        input.addEventListener('keydown', function(event) {
+          if (event.key === 'Enter') {
+            const welcomeText = document.getElementById('welcome-text');
+            if (welcomeText) {
+              welcomeText.style.display = 'none';
+            }
+            const command = input.value;
+            input.value = '';
+            executeCommand(command);
+          }
+        });
+      
+        function executeCommand(command) {
+          const commandLine = document.createElement('div');
+          commandLine.textContent = '> ' + command;
+          commandLine.classList.add('text-white', 'font-weight-bold');
+          terminal.appendChild(commandLine);
+      
+          fetch('/execute', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ command: command })
+          })
+          .then(response => response.json())
+          .then(data => {
+            const output = document.createElement('div');
+            output.textContent = data.output;
+            output.classList.add('text-white');
+            terminal.appendChild(output);
+            terminal.scrollTop = terminal.scrollHeight;
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
