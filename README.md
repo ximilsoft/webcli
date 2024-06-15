@@ -1,6 +1,6 @@
 # WebCLI
 
-Control your computer's CLI from a browser on any device within your network (desktop, mobile).
+Control your computer's CLI from the browser on any device within your network (desktop, mobile).
 
 ![](preview/preview1.png)
 
